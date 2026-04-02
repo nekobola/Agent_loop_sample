@@ -7,6 +7,7 @@ have been available at that time.
 
 from __future__ import annotations
 
+import asyncio
 import time
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock
@@ -14,7 +15,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 
 from agent.loop import AgentLoop, LLMProvider, LoopConfig
-from agent.memory import MemoryStore, SessionMemory
+from agent.memory import MemoryEntry, MemoryStore, SessionMemory
 
 
 class TestNoLookAheadBiasInMemory:
@@ -115,7 +116,6 @@ class TestNoLookAheadBiasInLoop:
                 return {"content": "Done", "tool_calls": []}
 
         # Need to set up memory store to persist conversation history
-        from agent.memory import MemoryStore
         memory = MemoryStore()
         loop = AgentLoop(provider=TrackingProvider(), memory_store=memory)
 
