@@ -1,0 +1,7 @@
+agent:
+  model: "claude-sonnet-4-20250514"
+  max_iterations: 10
+  max_context_tokens: 100000
+  temperature: 0.7
+  timezone: "Asia/Shanghai"
+  workspace_path: "."

@@ -16,19 +16,63 @@ from typing import Any, Awaitable, Callable
 import logging
 import sys
 
+import yaml
+
 logger = logging.getLogger(__name__)
+
+# Default config path relative to this file's directory
+_DEFAULT_CONFIG_PATH = Path(__file__).parent.parent / "config.yaml"
+
+# Sentinel for unset fields
+_UNSET = object()
+
+
+def _load_config_dict() -> dict[str, Any]:
+    """Load config from config.yaml if it exists."""
+    if _DEFAULT_CONFIG_PATH.exists():
+        try:
+            with open(_DEFAULT_CONFIG_PATH, "r") as f:
+                data = yaml.safe_load(f)
+                if data and "agent" in data:
+                    return data["agent"]
+        except Exception as exc:
+            logger.warning("Failed to load config.yaml: %s", exc)
+    return {}
+
+
+# Load config once at module level
+_yaml_config: dict[str, Any] = _load_config_dict()
 
 
 @dataclass
 class LoopConfig:
-    """Configuration for the agent loop."""
+    """Configuration for the agent loop.
 
-    model: str = "claude-sonnet-4-20250514"
-    max_iterations: int = 10
-    max_context_tokens: int = 100000
-    temperature: float = 0.7
-    timezone: str = "Asia/Shanghai"
-    workspace_path: str | Path = "."
+    Loads defaults from config.yaml in the project root.
+    Override individual fields to override config values.
+    """
+
+    model: str = _UNSET  # type: ignore[assignment]
+    max_iterations: int = _UNSET  # type: ignore[assignment]
+    max_context_tokens: int = _UNSET  # type: ignore[assignment]
+    temperature: float = _UNSET  # type: ignore[assignment]
+    timezone: str = _UNSET  # type: ignore[assignment]
+    workspace_path: str | Path = _UNSET  # type: ignore[assignment]
+
+    def __post_init__(self) -> None:
+        defaults = _yaml_config
+        if self.model is _UNSET:
+            object.__setattr__(self, "model", defaults.get("model", "claude-sonnet-4-20250514"))
+        if self.max_iterations is _UNSET:
+            object.__setattr__(self, "max_iterations", defaults.get("max_iterations", 10))
+        if self.max_context_tokens is _UNSET:
+            object.__setattr__(self, "max_context_tokens", defaults.get("max_context_tokens", 100000))
+        if self.temperature is _UNSET:
+            object.__setattr__(self, "temperature", defaults.get("temperature", 0.7))
+        if self.timezone is _UNSET:
+            object.__setattr__(self, "timezone", defaults.get("timezone", "Asia/Shanghai"))
+        if self.workspace_path is _UNSET:
+            object.__setattr__(self, "workspace_path", defaults.get("workspace_path", "."))
 
 
 @dataclass
