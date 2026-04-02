@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Awaitable, Callable
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from agent.loop import AgentLoop
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 

@@ -2,15 +2,12 @@
 
 from __future__ import annotations
 
-import asyncio
-from dataclasses import dataclass, field
-from typing import Any, Awaitable
-from unittest.mock import AsyncMock, MagicMock, patch
+from typing import Any
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from agent.loop import AgentLoop, LoopConfig, LoopResponse, LLMProvider
-
+from agent.loop import AgentLoop, LLMProvider, LoopConfig, LoopResponse
 
 # -------------------------------------------------------------------------
 # Mock LLM Provider

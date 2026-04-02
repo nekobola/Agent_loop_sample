@@ -7,8 +7,6 @@ import tempfile
 import time
 from pathlib import Path
 
-import pytest
-
 from agent.memory import MemoryEntry, MemoryStore, SessionMemory
 
 
