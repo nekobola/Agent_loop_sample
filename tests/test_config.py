@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import tempfile
 from pathlib import Path
 
-import pytest
 import yaml
 
-from agent.loop import LoopConfig, _DEFAULT_CONFIG_PATH, _load_config_dict
+from agent.loop import _DEFAULT_CONFIG_PATH, LoopConfig, _load_config_dict
 
 
 class TestLoadConfigDict:
@@ -92,14 +90,14 @@ class TestConfigYamlExists:
 
     def test_config_yaml_valid_yaml(self) -> None:
         """Test that config.yaml is valid YAML."""
-        with open(_DEFAULT_CONFIG_PATH, "r") as f:
+        with open(_DEFAULT_CONFIG_PATH) as f:
             data = yaml.safe_load(f)
         assert data is not None
         assert "agent" in data
 
     def test_config_yaml_has_required_keys(self) -> None:
         """Test that config.yaml has all required agent keys."""
-        with open(_DEFAULT_CONFIG_PATH, "r") as f:
+        with open(_DEFAULT_CONFIG_PATH) as f:
             data = yaml.safe_load(f)
         agent_config = data["agent"]
         required_keys = ["model", "max_iterations", "max_context_tokens", "temperature", "timezone", "workspace_path"]

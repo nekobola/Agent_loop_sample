@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any, Awaitable
+from typing import Any
 
 import pytest
 
 from agent.hook import (
     AgentHook,
-    AgentHookContext,
     CompositeHook,
     HookBuilder,
     Response,

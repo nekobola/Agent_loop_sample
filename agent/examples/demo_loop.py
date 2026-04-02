@@ -6,18 +6,16 @@ Run with:
 """
 
 import asyncio
-import sys
 import os
+import sys
 
 # Add parent dir to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from agent.loop import AgentLoop, LoopConfig
 from agent.hook import HookBuilder
-from agent.registry import ToolRegistry, get_registry
+from agent.loop import AgentLoop, LoopConfig
 from agent.memory import MemoryStore
-from agent.context import ContextBuilder
-
+from agent.registry import get_registry
 
 # ---------------------------------------------------------------------------
 # Register some tools

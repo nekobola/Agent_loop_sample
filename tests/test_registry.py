@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any
 
 import pytest
 
-from agent.registry import ToolDef, ToolResult, ToolRegistry, get_registry
+from agent.registry import ToolDef, ToolRegistry, get_registry
 
 
 class TestToolDef:

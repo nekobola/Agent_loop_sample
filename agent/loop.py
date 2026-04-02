@@ -5,16 +5,13 @@ Inspired by nanobot's ultra-lightweight agent architecture.
 
 from __future__ import annotations
 
-import asyncio
 import json
+import logging
 import re
-import time
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Awaitable, Callable
-
-import logging
-import sys
+from typing import Any
 
 import yaml
 
@@ -31,7 +28,7 @@ def _load_config_dict() -> dict[str, Any]:
     """Load config from config.yaml if it exists."""
     if _DEFAULT_CONFIG_PATH.exists():
         try:
-            with open(_DEFAULT_CONFIG_PATH, "r") as f:
+            with open(_DEFAULT_CONFIG_PATH) as f:
                 data = yaml.safe_load(f)
                 if data and "agent" in data:
                     return data["agent"]

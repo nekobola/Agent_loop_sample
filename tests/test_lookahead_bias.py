@@ -116,7 +116,6 @@ class TestNoLookAheadBiasInLoop:
                 return {"content": "Done", "tool_calls": []}
 
         # Need to set up memory store to persist conversation history
-        from agent.memory import MemoryStore
         memory = MemoryStore()
         loop = AgentLoop(provider=TrackingProvider(), memory_store=memory)
 
